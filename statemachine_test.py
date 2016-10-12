@@ -4,15 +4,6 @@ from string import upper
 import re
 import os
 
-
-dir = "C:\case"
-for root, dirs, files in os.walk(dir):
-    for name in files:
-        global a_path
-        a_path=os.path.join(root,name)
-        print 'file: ',a_path
-A = raw_input('Please type in your file name: ')
-i = len(open(A).read().split("\n"))
 def doctype_way(txt): #检验doctype
     sped_txt = txt.split( "<",1)[1].split(None,1) #分离字符串
     word = sped_txt[0].upper()
@@ -25,7 +16,7 @@ def doctype_way(txt): #检验doctype
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def doctype_state_way(txt): #检验doctype后面的html字符
     sped_txt = txt.split('>',1)
     word = sped_txt[0].upper().strip()
@@ -38,7 +29,7 @@ def doctype_state_way(txt): #检验doctype后面的html字符
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def dhtml_state_way(txt): #检验<html>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -51,7 +42,7 @@ def dhtml_state_way(txt): #检验<html>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def shtml_state_way(txt): #检验<head>|<body>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -67,7 +58,7 @@ def shtml_state_way(txt): #检验<head>|<body>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def shead_state_way(txt): #检验<title>|</head>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -83,7 +74,7 @@ def shead_state_way(txt): #检验<title>|</head>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def stitle_state_way(txt): #检验</title>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -96,7 +87,7 @@ def stitle_state_way(txt): #检验</title>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def etitle_state_way(txt): #检验</head>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -109,7 +100,7 @@ def etitle_state_way(txt): #检验</head>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def ehead_state_way(txt): #检验<body>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -122,7 +113,7 @@ def ehead_state_way(txt): #检验<body>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def sbody_state_way(txt): #检验<p>|<a>|</body>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -141,7 +132,7 @@ def sbody_state_way(txt): #检验<p>|<a>|</body>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def sp_state_way(txt): #检验</p>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -154,7 +145,7 @@ def sp_state_way(txt): #检验</p>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def ep_state_way(txt): #检验<p>|<a>|</body>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -173,7 +164,7 @@ def ep_state_way(txt): #检验<p>|<a>|</body>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def sa_state_way(txt): #检验</a>
     sped_txt = txt.split('<',1)[1].split(">",1)
     word = sped_txt[0].upper()
@@ -186,7 +177,7 @@ def sa_state_way(txt): #检验</a>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-len(sped_txt[1].split("\n"))
     return (newstate,txt)
-    
+
 def ea_state_way(txt): #检验<p>|<a>|</body>
     sped_txt = txt.split('<',1)[1].split('>',1)
     word = sped_txt[0].upper()
@@ -205,7 +196,7 @@ def ea_state_way(txt): #检验<p>|<a>|</body>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i-t+1
     return (newstate,txt)
-    
+
 def ebody_state_way(txt): #检验</html>
     if '<' in txt:
         sped_txt = txt.split('<',1)[1].split('>',1)
@@ -226,9 +217,9 @@ def ebody_state_way(txt): #检验</html>
         newstate = 'wrong html file'
         print reason,'!','wrong row number: ', i
     return (newstate,txt)
-    
 
-    
+
+
 if __name__=='__main__': #主函数
     m = StateMachine() #定义类
     m.add_state('orig',doctype_way)
@@ -248,7 +239,15 @@ if __name__=='__main__': #主函数
     m.add_state("correct html file",None,end_state=1)
     m.add_state("wrong html file", None, end_state=1)
     m.set_start('orig') #添加各种状态的方法
-    m.run(open(A).read()) #读取文件
-    
-relink = re.compile(r'<A href="(.*)".*>') #正则匹配url链接
-print 'URL:', relink.findall(open(A).read())
+    dir = "./"
+    for root, dirs, files in os.walk(dir):
+        for name in files:
+            global a_path
+            a_path=os.path.join(root,name)
+            print 'file: ',a_path
+            file_lines = open(a_path).read()
+            global i
+            i = len(file_lines.split("\n"))
+            m.run(file_lines) #读取文件
+            relink = re.compile(r'<A href="(.*)".*>') #正则匹配url链接
+            print 'URL:', relink.findall(open(a_path).read())
