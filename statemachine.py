@@ -26,7 +26,7 @@ class StateMachine:
       while True:
          (newstate, cargo) = handler(cargo)
          if upper(newstate) in self.endStates:
-            print("reached ", newstate)
+            print newstate
             break
          else:
             handler = self.handlers[upper(newstate)]
